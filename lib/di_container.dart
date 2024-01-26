@@ -1,15 +1,17 @@
 
 
 
+import 'package:bazar/controller/cart_controller.dart';
+import 'package:bazar/view/screens/bottom_nav_bar_screeen/menu_screen.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
 
-  /// Controller
-  // Get.lazyPut(() => OnboardingController(), fenix: true);
-  // Get.lazyPut(() => TaskController(), fenix: true);
+   //Controller
+   // Get.lazyPut(() => CartController(), fenix: true);
+   Get.lazyPut(() => CartController(), fenix: true);
   // Get.lazyPut(() => SplashController(), fenix: true);
 
 
