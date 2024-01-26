@@ -1,4 +1,6 @@
 import 'package:bazar/view/screens/bottom_nav_bar_screeen/nav_bar_screen.dart';
+import 'package:bazar/view/screens/bottom_nav_bar_screeen/product_home_screen.dart';
+import 'package:bazar/view/widgets/product_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -37,10 +39,11 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               //primarySwatch: Colors.blue,
             ),
-            initialRoute: NavBarScreen.routeName,
-            getPages: [
-              GetPage(name: NavBarScreen.routeName, page: () => NavBarScreen()),
-            ],
+            //initialRoute: NavBarScreen.routeName,
+            home: ProductHomeScreen(),
+            // getPages: [
+            //   GetPage(name: NavBarScreen.routeName, page: () => NavBarScreen()),
+            // ],
           );
         }
     );
