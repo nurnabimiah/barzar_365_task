@@ -12,119 +12,16 @@ import 'dart:convert';
 
 
 
+import '../../../controller/cart_controller.dart';
+import '../../../controller/product_controller.dart';
 import '../../../utils/app_font_style.dart';
 import '../../widgets/product_card_widget.dart';
-
-class CartItem {
-  final String productId;
-  final String productName;
-  final String productImage;
-  int quantity;
-
-  CartItem({
-    required this.productId,
-    required this.productName,
-    required this.productImage,
-    this.quantity = 1,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'productId':productId,
-      'productName': productName,
-      'productImage': productImage,
-      'quantity': quantity,
-    };
-  }
-
-  factory CartItem.fromJson(Map<String, dynamic> json) {
-    return CartItem(
-      productId:json['productId'],
-      productName: json['productName'],
-      productImage: json['productImage'],
-      quantity: json['quantity'],
-    );
-  }
-}
+import '../cart_screen/cart_screen.dart';
 
 
 
-class CartController extends GetxController {
-  final RxList<CartItem> cartItems = <CartItem>[].obs;
-  final SharedPreferences prefs = Get.find();
-
-  @override
-  void onInit() {
-    super.onInit();
-    List<String>? storedItems = prefs.getStringList('cartItems');
-    if (storedItems != null) {
-      cartItems.assignAll(storedItems.map((item) => CartItem.fromJson(jsonDecode(item))).toList());
-    }
-  }
-
-  Future<void> addToCart(CartItem item) async {
-    if (cartItems.any((existingItem) => existingItem.productName == item.productName)) {
-      // If item already exists, increment quantity
-      final existingItemIndex = cartItems.indexWhere((existingItem) => existingItem.productName == item.productName);
-      cartItems[existingItemIndex].quantity++;
-    } else {
-      // If item does not exist, add it to the cart
-      cartItems.add(item);
-    }
-    update(); // Notify observers and update the UI
-    await saveCartToStorage();
-  }
-
-  Future<void> removeFromCart(CartItem item) async {
-    if (item.quantity > 1) {
-      // If quantity is greater than 1, decrement quantity
-      final existingItemIndex = cartItems.indexWhere((existingItem) => existingItem.productName == item.productName);
-      cartItems[existingItemIndex].quantity--;
-    } else {
-      // If quantity is 1, remove the item from the cart
-      cartItems.remove(item);
-    }
-    update(); // Notify observers and update the UI
-    await saveCartToStorage();
-  }
 
 
-  Future<void> saveCartToStorage() async {
-    List<String> jsonList = cartItems.map((item) => jsonEncode(item.toJson())).toList();
-    await prefs.setStringList('cartItems', jsonList);
-  }
-}
-
-
-class ProductController extends GetxController {
-  final CartController cartController = Get.put(CartController());
-
-  void toggleCartState(int index) {
-    bool isInCart = cartController.cartItems.any((item) => item.productId == productList[index].productId);
-    if (isInCart) {
-      removeFromCart(index);
-    } else {
-      addToCart(index);
-    }
-    cartController.saveCartToStorage();
-    update(); // Trigger rebuild
-  }
-
-  void addToCart(int index) {
-    cartController.cartItems.add(
-      CartItem(
-        productId: productList[index].productId,
-        productName: productList[index].productName,
-        productImage: productList[index].productImage,
-      ),
-    );
-  }
-
-  void removeFromCart(int index) {
-    String productId = productList[index].productId;
-    cartController.cartItems.removeWhere((item) => item.productName == productId);
-  }
-}
 
 class ProductHomeScreen extends StatelessWidget {
   final ProductController productController = Get.put(ProductController());
@@ -140,6 +37,8 @@ class ProductHomeScreen extends StatelessWidget {
           style: TextStyle(fontSize: 20),
         ),
       ),
+
+
       body: Column(
         children: [
           Expanded(
@@ -155,27 +54,26 @@ class ProductHomeScreen extends StatelessWidget {
                 itemCount: productList.length,
                 itemBuilder: (BuildContext ctx, index) {
                   final product = productList[index];
-                  return GetBuilder<ProductController>(
-                    builder: (controller) => ProductCardWidget(
-                      index: index,
-                      plasticNameText: product.isPlastic ? '80G Plastic' : 'Plastic free',
-                      inStcokText: product.inStock ? 'In Stock' : 'Stock Out',
-                      productNameText: product.productName,
-                      productWeightText: product.productWeight,
-                      proudtPrictText: product.productPrice,
-                      productDiscountPriceText: product.productDiscount,
-                      productImage: product.productImage,
-                      discountSale: product.isDiscount ? '51 % sale' : '',
-                      isDiscount: product.isDiscount,
-                      isAddedToCart: controller.cartController.cartItems.any(
-                            (item) => item.productName == product.productName,
-                      ),
-                      addTocart: () {
-                        controller.toggleCartState(index);
-                        print('Item added to cart: ${product.productName}');
-                      },
+                  return Obx(() =>  ProductCardWidget(
+                    index: index,
+                    plasticNameText: product.isPlastic ? '80G Plastic' : 'Plastic free',
+                    inStcokText: product.inStock ? 'In Stock' : 'Stock Out',
+                    productNameText: product.productName,
+                    productWeightText: product.productWeight,
+                    proudtPrictText: product.productPrice,
+                    productDiscountPriceText: product.productDiscount,
+                    productImage: product.productImage,
+                    discountSale: product.isDiscount ? '51 % sale' : '',
+                    isDiscount: product.isDiscount,
+                    isAddedToCart: productController.cartController.cartItems.any(
+                          (item) => item.productId == product.productId,
                     ),
-                  );
+                    addTocart: () {
+                      productController.toggleCartState(index);
+                      print('Item added to cart: ${product.productName}');
+                    },
+                  ));
+
                 },
               ),
             ),
@@ -188,6 +86,8 @@ class ProductHomeScreen extends StatelessWidget {
           ),
         ],
       ),
+
+
     );
   }
 }
@@ -349,67 +249,7 @@ class ProductCardWidget extends StatelessWidget {
   }
 }
 
-class CartScreen extends StatefulWidget {
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
 
-class _CartScreenState extends State<CartScreen> {
-  final CartController cartController1 = Get.find<CartController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cart'),
-      ),
-      body: GetBuilder<CartController>(
-        builder: (cartController) {
-          return Column(
-            children: [
-              Expanded(
-                child: Obx(() => ListView.builder(
-                  itemCount: cartController.cartItems.length,
-                  itemBuilder: (BuildContext ctx, index) {
-                    final cartItem = cartController.cartItems[index];
-                    return ListTile(
-                      leading: Image.asset(cartItem.productImage, height: 50, width: 50),
-                      title: Text(cartItem.productName),
-                      subtitle: Text('Quantity: ${cartItem.quantity}'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.remove),
-                            onPressed: () async {
-                              await cartController.removeFromCart(cartItem);
-                            },
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () async {
-                              await cartController.addToCart(cartItem);
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                )),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Get.back();
-                },
-                child: Text('Go Back'),
-              ),
-            ],
-          );
-        }
-      ),
-    );
-  }
-}
 
 
 
