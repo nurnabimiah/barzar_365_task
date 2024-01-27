@@ -9,6 +9,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import '../data/model/base_model/api_response.dart';
 
+import '../data/model/response_model/product_model.dart';
 import 'cart_controller.dart';
 
 class ProductController extends GetxController {
@@ -21,7 +22,7 @@ class ProductController extends GetxController {
   String? success;
   ProductListModel? productListModel;
 
-  List<ProductListModel> productList = [];
+  // List<ProductListModel> productList = [];
 
 
 
@@ -31,7 +32,7 @@ class ProductController extends GetxController {
   final CartController cartController = Get.put(CartController());
 
   void toggleCartState(int index) {
-    bool isInCart = cartController.cartItems.any((item) => item.productId == productList[index].id);
+    bool isInCart = cartController.cartItems.any((item) => item.productId == productList[index].productId);
     if (isInCart) {
       removeFromCart(index);
     } else {
@@ -63,15 +64,15 @@ class ProductController extends GetxController {
   void addToCart(int index) {
     cartController.cartItems.add(
       CartItem(
-        productId: productList[index].id,
-        productName: productList[index].name,
-        productImage: productList[index].image,
+        productId: productList[index].productId,
+        productName: productList[index].productName,
+        productImage: productList[index].productImage,
       ),
     );
   }
 
   void removeFromCart(int index) {
-    String productId = productList[index].id;
+    String productId = productList[index].productId;
     cartController.cartItems.removeWhere((item) => item.productId == productId);
   }
 
