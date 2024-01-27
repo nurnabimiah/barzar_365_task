@@ -26,7 +26,6 @@ Future<void> init() async {
 
    //Controller;
    Get.lazyPut(() => CartController(), fenix: true);
-   //Get.lazyPut(() => ProductController(), fenix: true);
    Get.lazyPut(() => ProductController(productListRepo: sl()),fenix: true);
 
 

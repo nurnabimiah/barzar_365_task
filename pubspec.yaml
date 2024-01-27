@@ -43,6 +43,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   icons_launcher: ^2.1.6
   shared_preferences: ^2.2.0
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:

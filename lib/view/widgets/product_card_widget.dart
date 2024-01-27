@@ -3,6 +3,7 @@
 
 import 'package:bazar/utils/app_colors.dart';
 import 'package:bazar/utils/app_font_style.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -241,11 +242,11 @@ class ProductCardWidget extends StatelessWidget {
                     children: [
                       Image.asset('assets/images/star.png', height: 50.h, width: 90.w),
                       Positioned(
-                        top: 13.h,
-                        left: 20.w,
+                        top: 15.h,
+                        left: 25.w,
                         child: RotationTransition(
                           turns: AlwaysStoppedAnimation(20 / 360),
-                          child: Text(discountSale,style: myStyleInter(12.sp,AppColors.appWhiteColor,FontWeight.w600),),
+                          child: Text("${discountSale}% off",style: myStyleInter(12.sp,AppColors.appWhiteColor,FontWeight.w600),),
                         ),
                       ),
                     ],
@@ -255,9 +256,20 @@ class ProductCardWidget extends StatelessWidget {
               ],
             ),
 
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 8),
+            //   child: Image.network(productImage, height: 100, width: 122),
+            // ),
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
-              child: Image.asset(productImage, height: 100, width: 122),
+              child: CachedNetworkImage(
+                imageUrl: productImage,
+                height: 100.h,
+                width: 122.w,
+                placeholder: (context, url) => Image.asset('assets/images/apple.png'), // Placeholder widget while loading
+                errorWidget: (context, url, error) => Icon(Icons.error), // Widget to show on error
+              ),
             ),
 
             Align(
@@ -289,8 +301,11 @@ class ProductCardWidget extends StatelessWidget {
             //........product name................................
             Text(
               productNameText.toUpperCase(),
-              style: myStyleInter( 14.sp,  AppColors.appBlackColor, FontWeight.w600,-0.33),
+              maxLines: 1, // Set the maximum number of lines
+              overflow: TextOverflow.ellipsis, // Display ellipsis (...) for overflow
+              style: myStyleInter(14.sp, AppColors.appBlackColor, FontWeight.w600, -0.33),
             ),
+
             SizedBox(height: 6.h),
 
 
