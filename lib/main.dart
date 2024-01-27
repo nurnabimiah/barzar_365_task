@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
                   elevation: 0
               ),
               useMaterial3: true,
-              //primarySwatch: Colors.blue,
+
             ),
             //initialRoute: NavBarScreen.routeName,
             home: ProductHomeScreen(),

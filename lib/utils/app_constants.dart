@@ -9,7 +9,7 @@ class AppConstants {
   static const String TOKEN = 'token';
 
   //..........api..........
-  static const String allProductsApi = 'api/productGroup/products';
+  static const String allProductsApi = '/api/productGroup/products';
 
 
 
