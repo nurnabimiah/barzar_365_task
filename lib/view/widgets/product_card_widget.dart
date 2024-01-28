@@ -256,21 +256,21 @@ class ProductCardWidget extends StatelessWidget {
               ],
             ),
 
-            // Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: 8),
-            //   child: Image.network(productImage, height: 100, width: 122),
-            // ),
-
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
-              child: CachedNetworkImage(
-                imageUrl: productImage,
-                height: 100.h,
-                width: 122.w,
-                placeholder: (context, url) => Image.asset('assets/images/apple.png'), // Placeholder widget while loading
-                errorWidget: (context, url, error) => Icon(Icons.error), // Widget to show on error
-              ),
+              child: Image.asset(productImage, height: 100, width: 122),
             ),
+
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 8),
+            //   child: CachedNetworkImage(
+            //     imageUrl: productImage,
+            //     height: 100.h,
+            //     width: 122.w,
+            //     placeholder: (context, url) => Image.asset('assets/images/apple.png'), // Placeholder widget while loading
+            //     errorWidget: (context, url, error) => Icon(Icons.error), // Widget to show on error
+            //   ),
+            // ),
 
             Align(
               alignment: Alignment.centerRight,

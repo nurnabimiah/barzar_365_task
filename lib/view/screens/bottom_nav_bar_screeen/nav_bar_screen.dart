@@ -94,32 +94,32 @@ class BottomNavBar extends StatelessWidget {
           ),
         ),
 
-        floatingActionButton: GestureDetector(
+        floatingActionButton: Obx(()=>GestureDetector(
           onTap: (){
             Get.toNamed(CartScreen.routeName);
           },
           child: Container(
-            height: 50.h,
-            width: 50.w,
-            decoration: BoxDecoration(
-                color: AppColors.appBrandColor,
-                shape: BoxShape.circle
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 4.0.h,left:4.w),
-                  child: Container(
-                      height: 15.h,
-                      width: 15.w,
-                      decoration: BoxDecoration(color:AppColors.appWhiteColor,shape: BoxShape.circle),
-                      child: Center(child: Text('9',style: TextStyle(color: AppColors.appBlackColor,fontSize: 8.sp),))),
-                ),
-                Icon(Icons.shopping_cart,size: 18.sp,color: AppColors.appWhiteColor,),
-              ],
-            )
+              height: 50.h,
+              width: 50.w,
+              decoration: BoxDecoration(
+                  color: AppColors.appBrandColor,
+                  shape: BoxShape.circle
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 4.0.h,left:4.w),
+                    child: Container(
+                        height: 15.h,
+                        width: 15.w,
+                        decoration: BoxDecoration(color:AppColors.appWhiteColor,shape: BoxShape.circle),
+                        child: Center(child: Text('${controller.cartController.cartItems.length}',style: TextStyle(color: AppColors.appBlackColor,fontSize: 8.sp),))),
+                  ),
+                  Icon(Icons.shopping_cart,size: 18.sp,color: AppColors.appWhiteColor,),
+                ],
+              )
           ),
-        ),
+        )),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );

@@ -6,10 +6,4 @@ class AppText{
 
 
 
-
-
-
-
-
-
 }

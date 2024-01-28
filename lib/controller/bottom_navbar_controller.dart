@@ -6,10 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../view/screens/bottom_nav_bar_screeen/category_screen.dart';
+import 'cart_controller.dart';
 
 
 
 class BottomNavController extends GetxController {
+
+  final CartController cartController = Get.find<CartController>();
   int selectedIndex = 0;
   List<String> titles = ['Home', 'Dictionary', 'Translate'];
   List<Widget> screens = [
