@@ -36,7 +36,7 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
 
   void sortProductList() {
     if (selectedStatus == 'Product Name') {
-      productController.productList.sort((a, b) => a.name!.compareTo(b.name!));
+      productController.productList.sort((a, b) => a.name.compareTo(b.name));
     } else if (selectedStatus == 'Price') {
       productController.productList.sort((a, b) => a.price!.compareTo(b.price!));
     } else if (selectedStatus == 'Position') {
@@ -122,20 +122,20 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8,
                     ),
-                    itemCount: controller?.productList.length,
+                    itemCount: controller.productList.length,
                     itemBuilder: (BuildContext ctx, index) {
                       final product = controller.productList[index];
                       return Obx(() => ProductCardWidget(
                         index: index,
-                        plasticNameText: product.isPlastic! ? product.plasticType?.name ?? 'Plastic free' : 'Plastic free',
-                        inStcokText: product.isVisible! ? 'In Stock' : 'Stock Out',
-                        productNameText: product.name!,
-                        productWeightText: product.productWeight!,
+                        plasticNameText: product.isPlastic ? product.plasticType?.name ?? 'Plastic free' : 'Plastic free',
+                        inStcokText: product.isVisible ? 'In Stock' : 'Stock Out',
+                        productNameText: product.name,
+                        productWeightText: product.productWeight,
                         proudtPrictText: product.price.toString(),
-                        productDiscountPriceText: product.discountedAmount!.toString(),
+                        productDiscountPriceText: product.discountedAmount.toString(),
                         productImage: 'assets/images/apple.png',
-                        discountSale: product.isDiscount! ? product.discountAmount.toString() : '',
-                        isDiscount: product.isDiscount!,
+                        discountSale: product.isDiscount ? product.discountAmount.toString() : '',
+                        isDiscount: product.isDiscount,
                         isAddedToCart: productController.cartController.cartItems.any(
                               (item) => item.productId == product.id,
                         ),

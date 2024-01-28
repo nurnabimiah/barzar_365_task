@@ -69,34 +69,37 @@ class ProductListModel {
     this.discountAmount,
   });
 
-  factory ProductListModel.fromJson(Map<String, dynamic> json) => ProductListModel(
-    id: json["_id"],
-    employee: Employee.fromJson(json["employee"]),
-    brand: json["brand"] == null ? null : Brand.fromJson(json["brand"]),
-    category: Category.fromJson(json["category"]),
-    subcategory: Subcategory.fromJson(json["subcategory"]),
-    name: json["name"],
-    sku: json["sku"],
-    price: json["price"],
-    shortDescription: json["shortDescription"],
-    description: json["description"],
-    quantity: json["quantity"],
-    isVisible: json["isVisible"],
-    isPlastic: json["isPlastic"],
-    image: json["image"],
-    isDiscount: json["isDiscount"],
-    isBogo: json["isBogo"],
-    discountedAmount: json["discountedAmount"]?.toDouble(),
-    precedence: json["precedence"],
-    productWeight: json["productWeight"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
-    v: json["__v"],
-    plasticType: json["plasticType"] == null ? null : Brand.fromJson(json["plasticType"]),
-    weight: json["weight"],
-    discountType: json["discountType"],
-    discountAmount: json["discountAmount"],
-  );
+  factory ProductListModel.fromJson(Map<String, dynamic> json) {
+    return ProductListModel(
+      id: json["_id"] ?? "",
+      employee: Employee.fromJson(json["employee"] ?? {}),
+      brand: json["brand"] != null ? Brand.fromJson(json["brand"]) : null,
+      category: Category.fromJson(json["category"] ?? {}),
+      subcategory: Subcategory.fromJson(json["subcategory"] ?? {}),
+      name: json["name"] ?? "",
+      sku: json["sku"] ?? 0,
+      price: json["price"],
+      shortDescription: json["shortDescription"] ?? "",
+      description: json["description"] ?? "",
+      quantity: json["quantity"] ?? 0,
+      isVisible: json["isVisible"] ?? false,
+      isPlastic: json["isPlastic"] ?? false,
+      image: json["image"] ?? "",
+      isDiscount: json["isDiscount"] ?? false,
+      isBogo: json["isBogo"] ?? false,
+      discountedAmount: json["discountedAmount"]?.toDouble() ?? 0.0,
+      precedence: json["precedence"] ?? 0,
+      productWeight: json["productWeight"] ?? "",
+      createdAt: DateTime.parse(json["createdAt"] ?? ""),
+      updatedAt: DateTime.parse(json["updatedAt"] ?? ""),
+      v: json["__v"] ?? 0,
+      plasticType: json["plasticType"] != null ? Brand.fromJson(json["plasticType"]) : null,
+      weight: json["weight"] ?? 0,
+      discountType: json["discountType"] ?? "",
+      discountAmount: json["discountAmount"] ?? 0,
+    );
+  }
+
 
   Map<String, dynamic> toJson() => {
     "_id": id,
@@ -264,17 +267,36 @@ class Employee {
     required this.v,
   });
 
-  factory Employee.fromJson(Map<String, dynamic> json) => Employee(
-    id: employeeIdValues.map[json["_id"]]!,
-    name: employeeNameValues.map[json["name"]]!,
-    email: emailValues.map[json["email"]]!,
-    password: passwordValues.map[json["password"]]!,
-    level: levelValues.map[json["level"]]!,
-    image: employeeImageValues.map[json["image"]]!,
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
-    v: json["__v"],
-  );
+  factory Employee.fromJson(Map<String, dynamic> json) {
+    if (json == null) {
+      // Handle the case where the input JSON is null
+      return Employee(
+        id: EmployeeId.THE_65_A388_BC77_A116_ACD1070_FD9,
+        name: EmployeeName.AZIZ,
+        email: Email.AZIZ_MIYAZI_BAZAR365_BIZ,
+        password: Password.THE_2_A_10_E_DJ9_JL7_QB9_W_K_CSD0_HJAL_TVJ_SDR2_D_VQ_ASLU_HQAM_AD_R_LO8_IHT_A_I,
+        level: Level.ADMIN,
+        image: EmployeeImage.EMPLOYEES_IMAGES_1705216187942_AZIZ_JPG,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        v: 0,
+      );
+    }
+
+    return Employee(
+      id: employeeIdValues.map[json["_id"]] ?? EmployeeId.THE_65_A388_BC77_A116_ACD1070_FD9,
+      name: employeeNameValues.map[json["name"]] ?? EmployeeName.AZIZ,
+      email: emailValues.map[json["email"]] ?? Email.AZIZ_MIYAZI_BAZAR365_BIZ,
+      password: passwordValues.map[json["password"]] ?? Password.THE_2_A_10_E_DJ9_JL7_QB9_W_K_CSD0_HJAL_TVJ_SDR2_D_VQ_ASLU_HQAM_AD_R_LO8_IHT_A_I,
+      level: levelValues.map[json["level"]] ?? Level.ADMIN,
+      image: employeeImageValues.map[json["image"]] ?? EmployeeImage.EMPLOYEES_IMAGES_1705216187942_AZIZ_JPG,
+      createdAt: DateTime.parse(json["createdAt"] ?? ""),
+      updatedAt: DateTime.parse(json["updatedAt"] ?? ""),
+      v: json["__v"] ?? 0,
+    );
+  }
+
+
 
   Map<String, dynamic> toJson() => {
     "_id": employeeIdValues.reverse[id],

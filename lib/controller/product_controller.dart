@@ -35,6 +35,37 @@ class ProductController extends GetxController {
 
   //.............get all product list from product list repo.....................
 
+  // Future<void> getAllProductsList() async {
+  //   isLoading = true;
+  //   update();
+  //   ApiResponse apiResponse = await productListRepo.getAllProductList();
+  //
+  //   if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+  //     isLoading = false;
+  //     if (apiResponse.response!.data != null) {
+  //       if (apiResponse.response!.data is List) {
+  //         // Handle the list data appropriately (e.g., store it or process it)
+  //         // Example: Assign the list directly to productList
+  //         productList = List<ProductListModel>.from(apiResponse.response!.data.map((item) => ProductListModel.fromJson(item)));
+  //       } else {
+  //
+  //         try {
+  //           List<ProductListModel> parsedList = productListFromJson(apiResponse.response!.data!);
+  //           productList = parsedList;
+  //         } catch (e) {
+  //           // Handle parsing error, if any
+  //           print("Error parsing JSON: $e");
+  //         }
+  //       }
+  //     }
+  //     update();
+  //   } else {
+  //     isLoading = false;
+  //     update();
+  //   }
+  // }
+
+
   Future<void> getAllProductsList() async {
     isLoading = true;
     update();
@@ -42,15 +73,17 @@ class ProductController extends GetxController {
 
     if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       isLoading = false;
+
       if (apiResponse.response!.data != null) {
-        if (apiResponse.response!.data is List) {
+        dynamic responseData = apiResponse.response!.data;
+
+        if (responseData is List) {
           // Handle the list data appropriately (e.g., store it or process it)
           // Example: Assign the list directly to productList
-          productList = List<ProductListModel>.from(apiResponse.response!.data.map((item) => ProductListModel.fromJson(item)));
+          productList = List<ProductListModel>.from(responseData.map((item) => ProductListModel.fromJson(item)));
         } else {
-
           try {
-            List<ProductListModel> parsedList = productListFromJson(apiResponse.response!.data!);
+            List<ProductListModel> parsedList = productListFromJson(responseData!);
             productList = parsedList;
           } catch (e) {
             // Handle parsing error, if any
@@ -58,12 +91,15 @@ class ProductController extends GetxController {
           }
         }
       }
+
       update();
     } else {
       isLoading = false;
       update();
     }
   }
+
+
 
 
 
