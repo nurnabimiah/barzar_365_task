@@ -20,12 +20,12 @@ import '../cart_screen/cart_screen.dart';
 
 class ProductHomeScreen extends StatelessWidget {
 
+  static const String routeName = '/product_home_route';
   final ProductController productController = Get.find<ProductController>();
 
   @override
   Widget build(BuildContext context) {
 
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Baler list length:${productController.productList.length}');
     return Scaffold(
       backgroundColor: AppColors.appBackgroundColor,
       appBar: AppBar(
@@ -36,7 +36,7 @@ class ProductHomeScreen extends StatelessWidget {
 
       body: GetBuilder<ProductController>(
         builder: (controller) {
-          return Column(
+          return productController.productList.isNotEmpty? Column(
             children: [
 
               Expanded(
@@ -79,14 +79,8 @@ class ProductHomeScreen extends StatelessWidget {
                 ),
               ),
 
-              ElevatedButton(
-                onPressed: () {
-                  Get.to(CartScreen());
-                },
-                child: Text('View Cart'),
-              ),
             ],
-          );
+          ):Center(child: CircularProgressIndicator());
         }
       ),
 

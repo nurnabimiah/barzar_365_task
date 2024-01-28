@@ -1,6 +1,9 @@
+import 'package:bazar/view/screens/bottom_nav_bar_screeen/category_screen.dart';
 import 'package:bazar/view/screens/bottom_nav_bar_screeen/menu_screen.dart';
 import 'package:bazar/view/screens/bottom_nav_bar_screeen/nav_bar_screen.dart';
 import 'package:bazar/view/screens/bottom_nav_bar_screeen/product_home_screen.dart';
+import 'package:bazar/view/screens/bottom_nav_bar_screeen/search_screen.dart';
+import 'package:bazar/view/screens/cart_screen/cart_screen.dart';
 import 'package:bazar/view/widgets/product_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,11 +48,14 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
 
             ),
-            //initialRoute: NavBarScreen.routeName,
-            home: ProductHomeScreen(),
-            // getPages: [
-            //   GetPage(name: NavBarScreen.routeName, page: () => NavBarScreen()),
-            // ],
+            initialRoute: BottomNavBar.routeName,
+             getPages: [
+            GetPage(name: BottomNavBar.routeName, page: () => BottomNavBar()),
+            GetPage(name: ProductHomeScreen.routeName, page: () => ProductHomeScreen()),
+            GetPage(name: CategoryScreen.routeName, page: () => CategoryScreen()),
+            GetPage(name:SearchScreen.routeName, page: () => SearchScreen()),
+            GetPage(name:CartScreen.routeName, page: () => CartScreen()),
+            ],
           );
         }
     );

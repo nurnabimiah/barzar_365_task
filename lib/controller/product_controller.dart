@@ -10,77 +10,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import '../data/model/base_model/api_response.dart';
 import 'cart_controller.dart';
 
-// class ProductController extends GetxController {
-//
-//   final ProductListRepo productListRepo;
-//   ProductController({required this.productListRepo});
-//
-//   bool isLoading = false;
-//   String? message;
-//   String? success;
-//   ProductListModel? productListModel;
-//
-//   // List<ProductListModel> productList = [];
-//
-//
-//
-//
-//
-//
-//   final CartController cartController = Get.put(CartController());
-//
-//   void toggleCartState(int index) {
-//     bool isInCart = cartController.cartItems.any((item) => item.productId == productList[index].productId);
-//     if (isInCart) {
-//       removeFromCart(index);
-//     } else {
-//       addToCart(index);
-//     }
-//     cartController.saveCartToStorage();
-//     update();
-//   }
-//
-//
-//   //
-//   // void addToCart(int index) {
-//   //   cartController.cartItems.add(
-//   //     CartItem(
-//   //       productId: productList[index].productId,
-//   //       productName: productList[index].productName,
-//   //       productImage: productList[index].productImage,
-//   //     ),
-//   //   );
-//   // }
-//   //
-//   // void removeFromCart(int index) {
-//   //   String productId = productList[index].productId;
-//   //   cartController.cartItems.removeWhere((item) => item.productId == productId);
-//   // }
-//
-//
-//
-//   void addToCart(int index) {
-//     cartController.cartItems.add(
-//       CartItem(
-//         productId: productList[index].productId,
-//         productName: productList[index].productName,
-//         productImage: productList[index].productImage,
-//       ),
-//     );
-//   }
-//
-//   void removeFromCart(int index) {
-//     String productId = productList[index].productId;
-//     cartController.cartItems.removeWhere((item) => item.productId == productId);
-//   }
-//
-//
-//
-// }
 
-
-
-  // Adjust this import
 class ProductController extends GetxController {
   final ProductListRepo productListRepo;
   ProductController({required this.productListRepo});
@@ -154,6 +84,7 @@ class ProductController extends GetxController {
           productId: productId,
           productName: productList[index].name ?? '',
           productImage: productList[index].image ?? '',
+          productPrice: productList[index].price.toString() ,
         ),
       );
     }

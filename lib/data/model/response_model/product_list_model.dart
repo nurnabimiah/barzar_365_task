@@ -20,7 +20,7 @@ class ProductListModel {
   Subcategory subcategory;
   String name;
   int sku;
-  int price;
+  dynamic price;
   String shortDescription;
   String description;
   int quantity;
